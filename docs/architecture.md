@@ -114,9 +114,10 @@ The initial concern is to prevent unauthorized access from any outside sources
 
 
 
-> Resources 
-> * [Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)
-
+``` 
+Resources 
+ [Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)
+```
 
 ## Platform Monitoring and Auditing
 
