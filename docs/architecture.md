@@ -53,12 +53,17 @@ The solution would include the following Amazon technologies:
 * Redshift Spectrum
 * S3
 
-## Core Functionality
-Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, (Glue)[#glue] and (Lake Formation)[#lake-formation]. Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
+## Walkthrough
+Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
 
-For storage (S3)[#s3] is 
+Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). 
 
+For storage [S3](#s3) is the common thread throughout all potential solutions. All of the Amazon big data technologies integrate directly with it 
 
+Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
+
+## Security
+There are several laye
 
 
 # Utilization
@@ -94,6 +99,7 @@ The one common denominator of all potential AWS solutions is the utilization of 
 ### S3
 
 
+
 ### Redshift
 Redshift is a columnar store offering from Amazon.
 
@@ -107,9 +113,9 @@ While Athena is not a storage technology, it can act as a replacement for Redshi
 ### Glacier
 Glacier is fundamentally S3
 
-> Resources 
-> * [Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)
-> * [Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)
+**Resources** 
+* [Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)
+* [Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)
 
 
 
