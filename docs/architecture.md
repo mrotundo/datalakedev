@@ -2,8 +2,7 @@
 
 
 * [Overview](#overview)
-* [Soluition](#solution)
-* [Utilization](#utilization)
+* [Solution](#solution)
 * [Research](#research)
 
 
@@ -18,8 +17,7 @@ The Amazon services offering is rapidly evolving and that is exceptionally true 
 * Security
 * Data Processing
 * Data Ingestion
-* Data Management
-* Process Management
+* Data / Process Management
 * Backup and Redundancy
 * System Monitoring and Auditing
 * Machine Learning 
@@ -53,40 +51,33 @@ The solution would include the following Amazon technologies:
 * Redshift Spectrum
 * S3
 
+<a href="lake-architecture.png" target="_blank"><img src="lake-architecture.png"/></a>
+
 ## Walkthrough
+At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external users.
+
 Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
 
 Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). 
 
-For storage [S3](#s3) is the common thread throughout all potential solutions. All of the Amazon big data technologies integrate directly with it 
+For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier)
 
-Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
+Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
-## Security
-There are several laye
+## Potential Extensions
+This does not cover likey
 
-
-# Utilization
-## 
-## Basic Data Processing / ETL
-Apache Glue utilizes
-
-## Complex Processing
-
-
-## Machine Learning
-More research required
 
 # Research
 
-## General
-Amazon has realized the 
+## Data / Process Management
+
 ### Glue
-
-
 
 ### Lake Formation
 Lake formation is still in a preview release, but is scheduled to be public within the next quarter.
+
+
 
 
 **Resources**
@@ -125,6 +116,7 @@ _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_
 
 ## Security
 
+### Virtual Private Cloud (VPC)
 The initial concern is to prevent unauthorized access from any outside sources
 
 ### Identity Access Management (IAM)
@@ -138,14 +130,11 @@ The initial concern is to prevent unauthorized access from any outside sources
 Glue itself utilizes a limited version of Spark to handle job processing. Currently it only supports Scala and Python.
 
 ### Lambda
-General purpose serverless processing 
+General purpose serverless processing. 
 
-### EMR
+### Elastic Map Reduce (EMR)
 
 
-## Process Management
-
-### Glue
 
 
 
