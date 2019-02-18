@@ -1,13 +1,13 @@
 # Data Lake Architecture
 
 
+* [Introduction](#introduction)
 * [Overview](#overview)
-* [Solution](#solution)
-* [Research](#research)
+* [Detail](#detail)
 
 
 
-# Overview
+# Introduction
 
 The Amazon services offering is rapidly evolving and that is exceptionally true of the big data / anayltics space. What is detailed in this document is a best approach at a general purpose data lake solution for a large enterprise. 
 
@@ -38,7 +38,7 @@ Although the inherent risk of pure cloud native doing so is that you are entirel
 It is important to note that due to time constraints this analysis does not factor in cost. 
 
 
-# Solution
+# Overview
 
 The solution would include the following Amazon technologies:
 * API Gateway
@@ -64,11 +64,13 @@ For storage [S3](#s3) is a native cloud file storage service, it is the defacto 
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
+
+
 ## Potential Extensions
 This does not cover likey
 
 
-# Research
+# Detail
 
 ## Data / Process Management
 
@@ -80,8 +82,7 @@ Lake formation is still in a preview release, but is scheduled to be public with
 
 
 
-**Resources**
-
+**Resources**<br/>
 _[Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)_
 
 ## Storage
@@ -105,9 +106,8 @@ While Athena is not a storage technology, it can act as a replacement for Redshi
 ### Glacier
 Glacier is fundamentally S3
 
-**Resources** 
-
-_[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_
+**Resources** <br/>
+_[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_<br/>
 _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_
 
 
@@ -134,14 +134,17 @@ General purpose serverless processing.
 
 ### Elastic Map Reduce (EMR)
 
+**Resources** <br/>
+_[Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)_
+<br/>_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_
+
+## Backup
+A simple approach to this is to ensure all data resides in S3, including backups from other storage engines (Redshift, Elasticsearch, etc.) and then have the S3 buckets replicated to Glacier
+
+**Resources**<br/>
+_[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-amazon-glacier-mirror-an-amazon-s3-bucket)_
 
 
-
-
-
-**Resources** 
-* [Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)
-* [Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)
 
 
 ## Platform Monitoring and Auditing
