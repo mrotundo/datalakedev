@@ -90,7 +90,8 @@ Lake formation is still in a preview release, but is scheduled to be public with
 
 
 **Resources**
-* [Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)
+
+_[Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)_
 
 ## Storage
 
@@ -114,8 +115,9 @@ While Athena is not a storage technology, it can act as a replacement for Redshi
 Glacier is fundamentally S3
 
 **Resources** 
-* [Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)
-* [Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)
+
+_[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_
+_[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_
 
 
 
