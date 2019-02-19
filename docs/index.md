@@ -78,18 +78,16 @@ Lake formation is planned to be generally available starting 2019Q2, but it appe
 
 ### Glue
 
+
 ### Lake Formation
-
-
 
 
 
 **Resources**<br/>
 _[Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)_
 
-## Storage
 
-The one common denominator of all potential AWS solutions is the utilization of S3 as a general storage layer
+## Storage
 
 ### S3
 
@@ -98,7 +96,7 @@ The one common denominator of all potential AWS solutions is the utilization of 
 ### Redshift
 Redshift is a columnar store offering from Amazon. It does require provisioning of virtual cores
 
-It is possible
+It is possible to dynamically scale Redshift by monitoring 
 
 ### Redshift Spectrum
 Redshift Spectrum extends the capabilities of Redshift beyond the 
@@ -132,6 +130,15 @@ Fine grained control over data/processing resources in other AWS services includ
 **Resources** <br/>
 _[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Formation - Security and Governance Summary)_
 
+## Data Ingestion
+### Kinesis
+
+### Storage Gateway
+
+### Snowball
+
+**Resources**<br/>
+_[Data Ingestion Methods](https://docs.aws.amazon.com/aws-technical-content/latest/building-data-lakes/data-ingestion-methods.html)_
 
 ## Processing
 
