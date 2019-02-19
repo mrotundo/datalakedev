@@ -113,7 +113,19 @@ _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_<br/>
 _[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)
 
 
+## System Monitoring And Alerting
 
+Both CloudWatch and CloudTrail provide insight into the behaviors of the platform on both a technical and usage level.
+
+
+### CloudWatch
+Monitoring of server / service health. Allows for alarms to be set to trigger behaviors. Can be utilized in 
+
+### CloudTrail
+Monitoring of activity occuring in AWS, focusing on API level activity. Exports data to S3 for review / processing. 
+
+**Resources**
+_[CloudWatch vs CloudTrail](https://www.quora.com/What-is-the-difference-between-CloudTrail-and-CloudWatch)_
 
 
 ## Security
