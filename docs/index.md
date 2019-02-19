@@ -7,7 +7,7 @@
 
 # Introduction
 
-The Amazon services offering is rapidly evolving and that is exceptionally true of the big data / anayltics space. What is detailed in this document is a best approach at a general purpose data lake solution for a large enterprise. 
+The Amazon services offering is rapidly evolving and that is exceptionally true of the big data / analytics space. What is detailed in this document is a best approach at a general purpose data lake solution for a large enterprise. 
 
 ## Solution Areas of Concern
 
@@ -18,7 +18,6 @@ The Amazon services offering is rapidly evolving and that is exceptionally true 
 * Data / Process Management
 * Backup and Redundancy
 * System Monitoring and Auditing
-* Machine Learning 
 
 ## Implementation
 
@@ -27,7 +26,7 @@ The implementation of technical components of the cloud solution can be broken d
 * **Cloud Provisioned** - Service offered by the cloud provider that requires virtual hardware be provisioned/scaled directly by end-user to allow for its functioning.
 * **Cloud Hosted** - A third party or open source technology that is hosted on the cloud, but must be maintained by the end user. This would also require that the virtual hardware be provisioned by the end user.
 
-In many ways _cloud native_ is ideal because it requires less implementation overhead and scaling is seamless. Although the inherent risk of pure cloud native is that you are entirely dependent on the selected provider. If the services drastically change or costs become untenable, migrating out to another provider may prove difficult as their might not be 
+In many ways _cloud native_ is ideal because it requires less implementation overhead and scaling is seamless. Although the inherent risk of pure cloud native is that you are entirely dependent on the selected provider. If the services drastically change or costs become untenable, migrating out to another provider may prove difficult as their might not be a parallel solution.
 
 
 It is important to note that due to time constraints this analysis does not factor in cost. 
@@ -39,23 +38,26 @@ It is important to note that due to time constraints this analysis does not fact
 
 ## Walkthrough
 
-Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
+Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep. 
 
-Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). It tightly integrates with many other AWS data / processing services to provide a central location for managing authorization. Lake Formation is still in its early stages, but Amazon appears to be positioning it to be a central interface for all major data lake functionality.
+Lake formation is a level "above" Glue, not only concerned with the ETL processes, but the data (and access to it). It tightly integrates with many other AWS data / processing services to provide a central location for managing authorization. While leveraging Glue for the ETL processes, Lake Formation provides templates and workflows to simplify their setup. Glue itself uses a (in some ways light) version of Spark to handle the processing. So the writing ETL logic would be straightforward for any Spark developer. Lake Formation is still in its early stages, but Amazon appears to be positioning it to be a central interface for all major data lake functionality.
 
 For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier), which can also act as a cost efficient way of handling data backups. [Redshift](#redshift) is a columnar data store which is currently the best native OLAP offering from AWS. Both S3 and Redshift integrate cleanly with most other Amazon processing technologies.
 
-An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena). Both can be used to use a variant of SQL to query data directly off of S3. Redshift Spectrum does so as an extension of the Redshift cluser, while Athena is a native cloud offering.
+An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena). Both can be used to use a variant of SQL to query data directly off of S3. Redshift Spectrum does so as an extension of the Redshift cluster, while Athena is a native cloud offering that requires no provisioning. 
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
-Ingesting data in the lake could either be performed in a streaming manner or in bulk transfers from data stored on-premise. [Kinesis](#kinesis) is a technology similar to Kafka, which will
+Ingesting data in the lake could either be performed in a streaming manner or in bulk transfers from data stored on-premise. [Kinesis](#kinesis) is a technology similar to Kafka, which can handle a massive stream of input data. A likely use-case is to have Kinesis stream the raw data directly to an S3 bucket, while also engaging [Lambda](#lambda) functionality to run some basic data processing / cleanup to send data to a parallel S3 container (or potentially Redshift database).
 
 
 At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access Lake Formation provides advanced controls which tightly couple with other Amazon services. This allows for user and/or profile level control down to essentially the "table" level of data. It is also possible to implement permissioning on S3 buckets, but it appears that Amazon is looking to standardize data lake access controls through Lake Formation. 
 
+Insight into both usage and utilization is crucial for maintaining a healthy platform. [CloudWatch](#cloudwatch) is a AWS native solution that monitors the health of the various services (specifically beneficial for services that require provisioned virtual hardware). While [CloudTrail](#cloudtrail) provides for auditing capabilities by logging platform utilization on an API call basis. Data from both of these services can be fed directly in S3 and then processed / visualized through the same methods that all other data in the lake is handled.
+
+
 ## Potential Extensions
-This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**, or a rapid access data index in its hosted **Elasticsearch** plaform.  
+This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**, or a rapid access data index in its hosted **Elasticsearch** platform.  
 
 
 **Lake Formation** leverages some machine learning functionality to aid in matching and deduplication, but that is only a small subset of the full native ML capabilities of AWS.
@@ -83,7 +85,7 @@ Lake formation is still in its early stages but includes the following features:
 * Access control and management
 * ETL and task management
 * **Blueprints** (templates) for data ingestion, which provide templates for setting up 
-* Automated partion detection (vs. new table creation) on ingest
+* Automated partition detection (vs. new table creation) on ingest
 * Has data cleansing functionality built in, including some Machine Learning and fuzzy matching capabilities. This provides for the ability to handle deduplication and data linkage.
 
 
@@ -127,7 +129,7 @@ Both CloudWatch and CloudTrail provide insight into the behaviors of the platfor
 Monitoring of server / service health. Allows for alarms to be set to trigger behaviors. Can be utilized in 
 
 ### CloudTrail
-Monitoring of activity occuring in AWS, focusing on API level activity. Exports data to S3 for review / processing. 
+Monitoring of activity occurring in AWS, focusing on API level activity. Exports data to S3 for review / processing. 
 
 **Resources**
 _[CloudWatch vs CloudTrail](https://www.quora.com/What-is-the-difference-between-CloudTrail-and-CloudWatch)_
@@ -152,7 +154,7 @@ _[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Form
 A streaming technology similar to Kafka.
 
 ### Storage Gateway
-Storage gateway essentiall offers a NFS mount which connnects with Amazon S3. This mount can be setup on 
+Storage gateway essentially offers a NFS mount which connects with Amazon S3. This mount can be setup on 
 
 ### Snowball
 Snowball is a semi on-premise solution wherein Amazon provides you with a server to install in your data center and it will then securely ship data up to AWS.
@@ -169,11 +171,11 @@ Both Glue ETL and EMR can utilize Spark (to varying degrees). This is also helpf
 ### Glue
 Glue itself utilizes a limited version of Spark to handle job processing. Currently it only supports Scala and Python.
 
-An additional feature of Glue is the introduction of the _**DynamicFrames**_ concept. This is essentially an extension of Spark's DataFrames, but allows for more flexibiltiy when handling ETL jobs that may have an input data with an inconsistent schema.
+An additional feature of Glue is the introduction of the _**DynamicFrames**_ concept. This is essentially an extension of Spark's DataFrames, but allows for more flexibility when handling ETL jobs that may have an input data with an inconsistent schema.
 
 
 ### Lambda
-General purpose serverless processing. 
+General purpose serverless processing. Can execute code in
 
 ### Elastic Map Reduce (EMR)
 
