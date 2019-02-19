@@ -100,9 +100,8 @@ S3 is a distributed object store which has unparalled durability and uptime. It 
 
 
 ### Redshift
-Redshift is a columnar store offering from Amazon. It does require provisioning of virtual cores
+Redshift is a columnar store offering from Amazon. It does require provisioning virtual hardware.
 
-It is possible to dynamically scale Redshift by monitoring 
 
 ### Redshift Spectrum
 Redshift Spectrum extends the capabilities of Redshift beyond its direct columnar store and allows for querying off of data structured in S3.
