@@ -49,6 +49,8 @@ An interesting case of overlap occurs between a technology extending Redshift, c
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
+Ingesting data in the lake could either be performed in a streaming manner or in bulk transfers from data stored on-premise. [Kinesis](#kinesis) is a technology similar to Kafka, which will
+
 
 At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access Lake Formation provides advanced controls which tightly couple with other Amazon services. This allows for user and/or profile level control down to essentially the "table" level of data. It is also possible to implement permissioning on S3 buckets, but it appears that Amazon is looking to standardize data lake access controls through Lake Formation. 
 
@@ -59,36 +61,41 @@ This solution is focused on ingestion and processing. While in both S3 and Redsh
 **Lake Formation** leverages some machine learning functionality to aid in matching and deduplication, but that is only a small subset of the full native ML capabilities of AWS.
 
 ## Integration
-One of the added benefits of working in the Amazon cloud is access to a robust set of APIs.
+One of the added benefits of working in the Amazon cloud is access to a robust set of APIs. Most all of the services detailed could be engaged from a REST API, allowing for a UI to be setup outside of Amazon.
 
 
 # Detail
 
 ## Data / Process Management
 
-Lake formation is planned to be generally available starting 2019Q2, but it appears to be worth waiting for as it is positioning itself as the Amazon Data Lake management technology. 
 
 ### Glue
 
-Maintains a data catalog 
+On the management side, Glue maintains both ETL management and a data catalog.
+
+The data
 
 ### Lake Formation
+
+Lake formation is planned to be generally available starting 2019Q2, but it appears to be worth waiting for as it is positioning itself as the Amazon Data Lake management technology. 
+
 Lake formation is still in its early stages but includes the following features:
-* Data 
 * Access control and management
-* **Blueprints** (templates) for data ingestion, which provide  
-* Automated partion detection (vs. new table)
+* ETL and task management
+* **Blueprints** (templates) for data ingestion, which provide templates for setting up 
+* Automated partion detection (vs. new table creation) on ingest
 * Has data cleansing functionality built in, including some Machine Learning and fuzzy matching capabilities. This provides for the ability to handle deduplication and data linkage.
 
 
 **Resources**<br/>
 _[Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)_
+_[Analytics Pipelines w/ AWS Glue](https://www.youtube.com/watch?v=S_xeHvP7uMo)_
 
 
 ## Storage
 
 ### S3
-S3 takes the place of HDFS 
+S3 is a distributed object store which has unparalled durability and uptime. It would be utilized as the base storage tech of any data lake solution.
 
 
 ### Redshift
@@ -108,7 +115,7 @@ Glacier is fundamentally S3
 **Resources** <br/>
 _[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_<br/>
 _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_<br/>
-_[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)
+_[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)_
 
 
 ## System Monitoring And Alerting
@@ -142,13 +149,18 @@ _[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Form
 
 ## Data Ingestion
 ### Kinesis
+A streaming technology similar to Kafka.
 
 ### Storage Gateway
+Storage gateway essentiall offers a NFS mount which connnects with Amazon S3. This mount can be setup on 
 
 ### Snowball
+Snowball is a semi on-premise solution wherein Amazon provides you with a server to install in your data center and it will then securely ship data up to AWS.
 
 **Resources**<br/>
 _[Data Ingestion Methods](https://docs.aws.amazon.com/aws-technical-content/latest/building-data-lakes/data-ingestion-methods.html)_
+_[Kinesis vs Kafka](http://www.jesse-anderson.com/2017/07/apache-kafka-and-amazon-kinesis/)_
+_[Storage Gateway Concepts](https://docs.aws.amazon.com/storagegateway/latest/userguide/StorageGatewayConcepts.html)_
 
 ## Processing
 
@@ -179,6 +191,9 @@ _[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-am
 
 
 ## Platform Monitoring and Auditing
+
+### CloudTrail
+
 
 ### CloudWatch
 
