@@ -43,7 +43,7 @@ Amazon has two overlapping technologies that focus on providing Data Lake functi
 
 Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). It tightly integrates with many other AWS data / processing services to provide a central location for managing authorization. Lake Formation is still in its early stages, but Amazon appears to be positioning it to be a central interface for all major data lake functionality.
 
-For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier), which can also act as a cost efficient way of handling data backups. [Redshift](#redshift) 
+For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier), which can also act as a cost efficient way of handling data backups. [Redshift](#redshift) is a columnar data store which is currently the best native OLAP offering from AWS. Both S3 and Redshift integrate cleanly with most other Amazon processing technologies.
 
 An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena).
 
