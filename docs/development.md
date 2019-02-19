@@ -9,15 +9,16 @@ Creating Jira objects for the following (with potential Jira object type in pare
 * ETL job (Job _(custom)_ )
 * 
 
-As a basic work
 
 
-There are two major 
 
 * Project / Task Management
 * Code Review 
 * Testing / Quality Assurance
 * Deployment Automation
+
+
+# Deployment Automation
 
 
 

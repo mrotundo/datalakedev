@@ -4,6 +4,7 @@
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Detail](#detail)
+* [Additional Items](#additional-items)
 
 
 
@@ -65,9 +66,8 @@ For storage [S3](#s3) is a native cloud file storage service, it is the defacto 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
 
-
 ## Potential Extensions
-This does not cover likey
+This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to 
 
 
 # Detail
@@ -146,10 +146,11 @@ _[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-am
 
 
 
-
 ## Platform Monitoring and Auditing
 
 ### CloudWatch
 
-**Resources** 
-* [Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)
+**Resources**<br/> 
+_[Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)_
+
+#Additional Items

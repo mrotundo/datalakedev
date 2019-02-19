@@ -8,7 +8,6 @@ The data lake and
 * Amazon's technology will constantly change, s
 * Don't reinvent technologies available through Amazon. Where possible create a "thin client" or potentially allow for controlled direct access to Amazon services.
 
-Amazon will continue to evolve its technology offerings, and it would make sense to offer 
 
 # Application Features
 

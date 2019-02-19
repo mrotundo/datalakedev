@@ -159,8 +159,8 @@ _[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-am
 **Resources**<br/> 
 _[Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)_
 
-#Additional Items
+# Additional Items
 
-[Notes on building a platform to extend / manage the lake.](#platform)
+[Notes on building a platform to extend / manage the lake.](platform)
 
-[Notes on setting up development processes / workflow to support data lake and platform development.](#development)
+[Notes on setting up development processes / workflow to support data lake and platform development.](development)
