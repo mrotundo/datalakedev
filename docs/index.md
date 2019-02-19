@@ -117,39 +117,44 @@ Glacier is fundamentally S3
 **Resources** <br/>
 _[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_<br/>
 _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_<br/>
-_[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)_
+_[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)_<br/>
+_[API Gateway w/ Kineisis](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-kinesis.html)
 
 
-## System Monitoring And Alerting
+## Platform Monitoring And Alerting
 
 Both CloudWatch and CloudTrail provide insight into the behaviors of the platform on both a technical and usage level.
 
 
 ### CloudWatch
-Monitoring of server / service health. Allows for alarms to be set to trigger behaviors. Can be utilized in 
-
+Monitoring of server / service health. Allows for alarms to be set to trigger behaviors. Can be utilized to scale up/down processing power for provisoned cloud tech.
 ### CloudTrail
 Monitoring of activity occurring in AWS, focusing on API level activity. Exports data to S3 for review / processing. 
 
-**Resources**
-_[CloudWatch vs CloudTrail](https://www.quora.com/What-is-the-difference-between-CloudTrail-and-CloudWatch)_
+**Resources**<br/>
+_[CloudWatch vs CloudTrail](https://www.quora.com/What-is-the-difference-between-CloudTrail-and-CloudWatch)_<br/>
+_[Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)_<br/>
 
 
 ## Security
 
 ### Virtual Private Cloud (VPC)
-Enclosing the entire solution inside of a Virtual Private Cloud
+Enclosing the entire solution inside of a Virtual Private Cloud would close off all traffic from outside of the virtual network. Tunnels could then be created to appropriate data centers / services / offices that would need to access the lake.
 
 ### Identity Access Management (IAM)
+Amazon provides for advanced user / role management functionality directly in AWS.
 
 ### Lake Formation
 Fine grained control over data/processing resources in other AWS services including: Athena, EMR, Glue and Redshift.
 
 
 **Resources** <br/>
-_[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Formation - Security and Governance Summary)_
+_[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Formation - Security and Governance Summary)_<br/>
 
 ## Data Ingestion
+### API Gateway
+The API Gateway is a streamlined way to deploy RESTful APIs into AWS. These could be exposed as endpoints external systems can push data to that could either be handled by Kinesis, processed by Lambda or written to a datastore directly.
+
 ### Kinesis
 A streaming technology similar to Kafka.
 
@@ -160,9 +165,9 @@ Storage gateway essentially offers a NFS mount which connects with Amazon S3. Th
 Snowball is a semi on-premise solution wherein Amazon provides you with a server to install in your data center and it will then securely ship data up to AWS.
 
 **Resources**<br/>
-_[Data Ingestion Methods](https://docs.aws.amazon.com/aws-technical-content/latest/building-data-lakes/data-ingestion-methods.html)_
-_[Kinesis vs Kafka](http://www.jesse-anderson.com/2017/07/apache-kafka-and-amazon-kinesis/)_
-_[Storage Gateway Concepts](https://docs.aws.amazon.com/storagegateway/latest/userguide/StorageGatewayConcepts.html)_
+_[Data Ingestion Methods](https://docs.aws.amazon.com/aws-technical-content/latest/building-data-lakes/data-ingestion-methods.html)_<br/>
+_[Kinesis vs Kafka](http://www.jesse-anderson.com/2017/07/apache-kafka-and-amazon-kinesis/)_<br/>
+_[Storage Gateway Concepts](https://docs.aws.amazon.com/storagegateway/latest/userguide/StorageGatewayConcepts.html)_<br/>
 
 ## Processing
 
@@ -175,30 +180,17 @@ An additional feature of Glue is the introduction of the _**DynamicFrames**_ con
 
 
 ### Lambda
-General purpose serverless processing. Can execute code in
+General purpose serverless processing. Can execute code in Node, Python, Java, Go and Ruby.
 
 ### Elastic Map Reduce (EMR)
 
 **Resources** <br/>
-_[Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)_
-<br/>_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_
-_[Dynamic Frames](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)_
+_[Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)_<br/>
+<br/>_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_<br/>
+_[Dynamic Frames](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)_<br/>
 
 ## Backup
-A simple approach to this is to ensure all data resides in S3, including backups from other storage engines (Redshift, Elasticsearch, etc.) and then have the S3 buckets replicated to Glacier
+A simple approach to this is to ensure all data resides in S3, including backups from other storage engines (Redshift, Elasticsearch, etc.) and then have the S3 buckets replicated to Glacier.
 
 **Resources**<br/>
 _[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-amazon-glacier-mirror-an-amazon-s3-bucket)_
-
-
-
-## Platform Monitoring and Auditing
-
-### CloudTrail
-
-
-### CloudWatch
-
-**Resources**<br/> 
-_[Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)_
-
