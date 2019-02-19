@@ -1,5 +1,3 @@
-# Data Lake Architecture
-
 
 * [Introduction](#introduction)
 * [Overview](#overview)
@@ -25,14 +23,12 @@ The Amazon services offering is rapidly evolving and that is exceptionally true 
 
 ## Implementation
 
-
 The implementation of technical components of the cloud solution can be broken down into three general buckets:
 * **Cloud Native** - Service offered by the cloud provider that requires zero provisioning or installation. It is entirely a managed service that only requires the configuration
 * **Cloud Provisioned** - Service offered by the cloud provider that requires virtual hardware be provisioned/scaled directly by end-user to allow for its functioning.
 * **Cloud Hosted** - A third party or open source technology that is hosted on the cloud, but must be maintained by the end user. This would also require that the virtual hardware be provisioned by the end user.
 
-The ideal solution is entirely cloud native because of 
-Although the inherent risk of pure cloud native doing so is that you are entirely dependent on this provider. If the services drastically change or costs become untenable, migrating out 
+In many ways _cloud native_ is ideal because it requires less implementation overhead and scaling is seamless. Although the inherent risk of pure cloud native is that you are entirely dependent on the selected provider. If the services drastically change or costs become untenable, migrating out to another provider may prove difficult as their might not be 
 
 
 
@@ -55,7 +51,6 @@ The solution would include the following Amazon technologies:
 * S3
 
 ## Walkthrough
-At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external users.
 
 Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
 
@@ -66,10 +61,13 @@ For storage [S3](#s3) is a native cloud file storage service, it is the defacto 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
 
-
+At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access **Lake Formation** provides advanced controls which tightly couple with other Amazon services. This allows for control 
 
 ## Potential Extensions
-This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to 
+This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**,  
+
+## Integration
+One of the added benefits of working in the Amazon cloud is access to a robust set of APIs
 
 
 # Detail
@@ -127,13 +125,23 @@ Enclosing the entire solution inside of a Virtual Private Cloud
 
 ### Identity Access Management (IAM)
 
+### Lake Formation
+Fine grained control over data/processing resources in other AWS services including: Athena, EMR, Glue and Redshift.
 
+
+**Resources** <br/>
+_[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Formation - Security and Governance Summary)_
 
 
 ## Processing
 
+Both Glue ETL and EMR can utilize Spark (to varying degrees). This is also helpful if processing needed to shift to different platform at some point as the Spark code should mostly transfer.
+
 ### Glue
 Glue itself utilizes a limited version of Spark to handle job processing. Currently it only supports Scala and Python.
+
+An additional feature of Glue is the introduction of the _**DynamicFrames**_ concept. This is essentially an extension of Spark's DataFrames, but allows for more flexibiltiy when handling ETL jobs that may have an input data with an inconsistent schema.
+
 
 ### Lambda
 General purpose serverless processing. 
@@ -143,6 +151,7 @@ General purpose serverless processing.
 **Resources** <br/>
 _[Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)_
 <br/>_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_
+_[Dynamic Frames](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)_
 
 ## Backup
 A simple approach to this is to ensure all data resides in S3, including backups from other storage engines (Redshift, Elasticsearch, etc.) and then have the S3 buckets replicated to Glacier
