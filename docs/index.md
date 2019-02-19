@@ -45,7 +45,7 @@ Lake formation is a level "above" Glue, not only concerened with the ETL process
 
 For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier), which can also act as a cost efficient way of handling data backups. [Redshift](#redshift) is a columnar data store which is currently the best native OLAP offering from AWS. Both S3 and Redshift integrate cleanly with most other Amazon processing technologies.
 
-An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena).
+An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena). Both can be used to use a variant of SQL to query data directly off of S3. Redshift Spectrum does so as an extension of the Redshift cluser, while Athena is a native cloud offering.
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
@@ -88,7 +88,7 @@ _[Lake Formation Tech Talk](https://www.youtube.com/watch?v=nsiLMqg654s)_
 ## Storage
 
 ### S3
-
+S3 takes the place of HDFS 
 
 
 ### Redshift
