@@ -83,7 +83,7 @@ Lake formation is planned to be generally available starting 2019Q2, but it appe
 Lake formation is still in its early stages but includes the following features:
 * Access control and management
 * ETL and task management
-* **Blueprints** (templates) for data ingestion, which provide templates for setting up 
+* **Blueprints** (templates) for data ingestion, which provide templates for setting up ETL procsses / data mappings
 * Automated partition detection (vs. new table creation) on ingest
 * Has data cleansing functionality built in, including some Machine Learning and fuzzy matching capabilities. This provides for the ability to handle deduplication and data linkage.
 
