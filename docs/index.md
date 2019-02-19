@@ -2,7 +2,6 @@
 * [Introduction](#introduction)
 * [Overview](#overview)
 * [Detail](#detail)
-* [Additional Items](#additional-items)
 
 
 
@@ -31,7 +30,6 @@ The implementation of technical components of the cloud solution can be broken d
 In many ways _cloud native_ is ideal because it requires less implementation overhead and scaling is seamless. Although the inherent risk of pure cloud native is that you are entirely dependent on the selected provider. If the services drastically change or costs become untenable, migrating out to another provider may prove difficult as their might not be 
 
 
-
 It is important to note that due to time constraints this analysis does not factor in cost. 
 
 
@@ -39,35 +37,29 @@ It is important to note that due to time constraints this analysis does not fact
 
 <a href="lake-architecture.png" target="_blank"><img src="lake-architecture.png"/></a>
 
-The solution would include the following Amazon technologies:
-* API Gateway
-* EMR
-* Glue
-* Lake Formation
-* Lambda
-* Kineisis
-* Redshift
-* Redshift Spectrum
-* S3
-
 ## Walkthrough
 
 Amazon has two overlapping technologies that focus on providing Data Lake functionality and management capabilities, [Glue](#glue) and [Lake Formation](#lake-formation). Glue focuses on ETL, but also provides data catalog functionality with tools to automate its upkeep.    
 
-Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). 
+Lake formation is a level "above" Glue, not only concerened with the ETL processes, but the data (and access to it). It tightly integrates with many other AWS data / processing services to provide a central location for managing authorization. Lake Formation is still in its early stages, but Amazon appears to be positioning it to be a central interface for all major data lake functionality.
 
-For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier)
+For storage [S3](#s3) is a native cloud file storage service, it is the defacto technology for bulk data persistence in Amazon data lake solutions. For longer term bulk storage there is also [Glacier](#glacier), which can also act as a cost efficient way of handling data backups. [Redshift](#redshift) 
+
+An interesting case of overlap occurs between a technology extending Redshift, called [Redshift Spectrum](#redshift-spectrum) and [Athena](#athena).
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
 
-At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access **Lake Formation** provides advanced controls which tightly couple with other Amazon services. This allows for control 
+At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access Lake Formation provides advanced controls which tightly couple with other Amazon services. This allows for user and/or profile level control down to essentially the "table" level of data. It is also possible to implement permissioning on S3 buckets, but it appears that Amazon is looking to standardize data lake access controls through Lake Formation. 
 
 ## Potential Extensions
-This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**,  
+This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**, or a rapid access data index in its hosted **Elasticsearch** plaform.  
+
+
+**Lake Formation** leverages some machine learning functionality to aid in matching and deduplication, but that is only a small subset of the full native ML capabilities of AWS.
 
 ## Integration
-One of the added benefits of working in the Amazon cloud is access to a robust set of APIs
+One of the added benefits of working in the Amazon cloud is access to a robust set of APIs.
 
 
 # Detail
@@ -78,9 +70,15 @@ Lake formation is planned to be generally available starting 2019Q2, but it appe
 
 ### Glue
 
+Maintains a data catalog 
 
 ### Lake Formation
-
+Lake formation is still in its early stages but includes the following features:
+* Data 
+* Access control and management
+* **Blueprints** (templates) for data ingestion, which provide  
+* Automated partion detection (vs. new table)
+* Has data cleansing functionality built in, including some Machine Learning and fuzzy matching capabilities. This provides for the ability to handle deduplication and data linkage.
 
 
 **Resources**<br/>
@@ -99,7 +97,7 @@ Redshift is a columnar store offering from Amazon. It does require provisioning 
 It is possible to dynamically scale Redshift by monitoring 
 
 ### Redshift Spectrum
-Redshift Spectrum extends the capabilities of Redshift beyond the 
+Redshift Spectrum extends the capabilities of Redshift beyond its direct columnar store and allows for querying off of data structured in S3.
 
 ### Athena
 While Athena is not a storage technology, it can act as a replacement for Redshift Spectrum (or other columnar store tech) by allowing for this querying behavior directly off of S3.
@@ -187,8 +185,3 @@ _[S3 Replication To Glacier](https://stackoverflow.com/questions/15325943/can-am
 **Resources**<br/> 
 _[Glue Monitoring](https://docs.aws.amazon.com/glue/latest/dg/monitor-glue.html)_
 
-# Additional Items
-
-[Notes on building a platform to extend / manage the lake.](platform)
-
-[Notes on setting up development processes / workflow to support data lake and platform development.](development)
