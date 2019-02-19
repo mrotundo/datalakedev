@@ -1,7 +1,7 @@
 
 * [Introduction](#introduction)
 * [Overview](#overview)
-* [Detail](#detail)
+* [Additional Details](#additional-details)
 
 
 
@@ -48,7 +48,7 @@ An interesting case of overlap occurs between a technology extending Redshift, c
 
 Processing for more straightforward ETL tasks could be handled directly through Glue, but it does not support some more advanced features of Spark. For heavier computing loads [Elastic Map Reduce (EMR)](#elastic-map-reduce-emr) should be utilized. There is additional overhead in EMR as it does require a cluster be provisioned, but in doing so you are gaining access to a full Hadoop stack.
 
-Ingesting data in the lake could either be performed in a streaming manner or in bulk transfers from data stored on-premise. [Kinesis](#kinesis) is a technology similar to Kafka, which can handle a massive stream of input data. A likely use-case is to have Kinesis stream the raw data directly to an S3 bucket, while also engaging [Lambda](#lambda) functionality to run some basic data processing / cleanup to send data to a parallel S3 container (or potentially Redshift database).
+Ingesting data in the lake could either be performed in a streaming manner or in bulk transfers from data stored on-premise. [Kinesis](#kinesis) is a technology similar to Kafka, which can handle a massive stream of input data. A likely use-case is to have Kinesis stream the raw data directly to an S3 bucket, while also engaging [Lambda](#lambda) functionality to run some basic data processing / cleanup to send data to a parallel S3 container (or potentially Redshift database). An interface for external systems to send this data can be setup through the [API Gateway](#api-gateway). Bulk data can be transferred from on-premise systems by setting up a [Storage Gateway](#storage-gateway) mapping.
 
 
 At the highest level the entire solution should be inside of a [Virtual Private Cloud (VPC)](#virtual-private-cloud-vpc) to isolate it from external systems. For more fine grained controls over data access Lake Formation provides advanced controls which tightly couple with other Amazon services. This allows for user and/or profile level control down to essentially the "table" level of data. It is also possible to implement permissioning on S3 buckets, but it appears that Amazon is looking to standardize data lake access controls through Lake Formation. 
@@ -66,7 +66,7 @@ This solution is focused on ingestion and processing. While in both S3 and Redsh
 One of the added benefits of working in the Amazon cloud is access to a robust set of APIs. Most all of the services detailed could be engaged from a REST API, allowing for a UI to be setup outside of Amazon.
 
 
-# Detail
+# Additional Details
 
 ## Data / Process Management
 
@@ -75,7 +75,6 @@ One of the added benefits of working in the Amazon cloud is access to a robust s
 
 On the management side, Glue maintains both ETL management and a data catalog.
 
-The data
 
 ### Lake Formation
 
@@ -118,7 +117,7 @@ Glacier is fundamentally S3
 _[Redshift Spectrum vs Athena](https://blog.openbridge.com/how-is-aws-redshift-spectrum-different-than-aws-athena-9baa2566034b)_<br/>
 _[Athena Review](https://www.youtube.com/watch?v=gGJ4zxeG9PI)_<br/>
 _[Elastic Resize of Redshift](https://aws.amazon.com/about-aws/whats-new/2018/11/amazon-redshift-elastic-resize/)_<br/>
-_[API Gateway w/ Kineisis](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-kinesis.html)
+_[API Gateway w/ Kineisis](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-kinesis.html)_
 
 
 ## Platform Monitoring And Alerting
@@ -149,7 +148,7 @@ Fine grained control over data/processing resources in other AWS services includ
 
 
 **Resources** <br/>
-_[https://aws.amazon.com/lake-formation/faqs/#Security_and_governance](Lake Formation - Security and Governance Summary)_<br/>
+_[Lake Formation - Security and Governance Summary](https://aws.amazon.com/lake-formation/faqs/#Security_and_governance)_<br/>
 
 ## Data Ingestion
 ### API Gateway
@@ -159,7 +158,7 @@ The API Gateway is a streamlined way to deploy RESTful APIs into AWS. These coul
 A streaming technology similar to Kafka.
 
 ### Storage Gateway
-Storage gateway essentially offers a NFS mount which connects with Amazon S3. This mount can be setup on 
+Storage gateway essentially offers a NFS mount which connects with Amazon S3. This mount can be setup on on-premise systems to ship data off to AWS.
 
 ### Snowball
 Snowball is a semi on-premise solution wherein Amazon provides you with a server to install in your data center and it will then securely ship data up to AWS.
@@ -183,10 +182,11 @@ An additional feature of Glue is the introduction of the _**DynamicFrames**_ con
 General purpose serverless processing. Can execute code in Node, Python, Java, Go and Ruby.
 
 ### Elastic Map Reduce (EMR)
+Provisioned cluster to provide Hadoop ecosystem functionality.
 
 **Resources** <br/>
 _[Data Pipelines w/ Glue](https://www.youtube.com/watch?v=6tBp2JuYmSg)_<br/>
-<br/>_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_<br/>
+_[Glue vs Lambda for ETL](https://www.reddit.com/r/aws/comments/9umxv1/aws_glue_vs_lambda_costbenefit/)_<br/>
 _[Dynamic Frames](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-dynamic-frame.html)_<br/>
 
 ## Backup
