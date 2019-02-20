@@ -57,7 +57,7 @@ Insight into both usage and utilization is crucial for maintaining a healthy pla
 
 
 ## Potential Extensions
-This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides . These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**, or a rapid access data index in its hosted **Elasticsearch** platform.  
+This solution is focused on ingestion and processing. While in both S3 and Redshift are readily accessible from other Amazon data services, it would make more sense to also include a standardized way to engage with a datastore that provides more rapid access. These could include such relational database such as **RDS**, a NoSQL solution **DynamoDB**, or a rapid access data index in its hosted **Elasticsearch** platform.  
 
 
 **Lake Formation** leverages some machine learning functionality to aid in matching and deduplication, but that is only a small subset of the full native ML capabilities of AWS.
